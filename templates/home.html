@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDA and Predictive Modeling</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Exploratory Data Analysis and Predictive Modeling</h1>
+        <h2>Upload a CSV file for analysis:</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv">
+            <button type="submit">Upload</button>
+        </form>
+
+        <!-- Seaborn Dataset Selection -->
+        <h3>Or select a Seaborn dataset</h3>
+        <form action="/seaborn/{{ dataset_name }}" method="get">
+            <select name="dataset_name" onchange="location = this.value;">
+                <option value="/seaborn/iris">Iris</option>
+                <option value="/seaborn/tips">Tips</option>
+                <option value="/seaborn/diamonds">Diamonds</option>
+                <option value="/seaborn/anagrams">Anagrams</option>
+                <option value="/seaborn/anscombe">Anscombe</option>
+                <option value="/seaborn/attention">Attention</option>
+                <option value="/seaborn/brain_networks">Brain_Networks</option>
+                <option value="/seaborn/car_crashes">Car_Crashes</option>
+                <option value="/seaborn/dots">Dots</option>
+                <option value="/seaborn/dowjones">Dowjones</option>
+                <option value="/seaborn/exercise">Exercise</option>
+                <option value="/seaborn/flights">Flights</option>
+                <option value="/seaborn/fmri">Fmri</option>
+                <option value="/seaborn/geyser">Geyser</option>
+                <option value="/seaborn/healthexp">Healthexp</option>
+                <option value="/seaborn/mpg">Mpg</option>
+                <option value="/seaborn/penguins">Penguins</option>
+                <option value="/seaborn/planets">Planets</option>
+                <option value="/seaborn/seaice">Seaice</option>
+                <option value="/seaborn/taxis">Taxis</option>
+                <option value="/seaborn/titanic">Titanic</option>
+
+                <!-- Add more options for other Seaborn datasets -->
+            </select>
+        </form>
+        <!-- Display the dataset name -->
+        <h2>Dataset: {{ dataset_name }}</h2>
+        <h2>Target Column: {{ target_col }}</h2>
+        <h1>Model Analysis Results</h1>
+        <!-- Display images and their descriptions -->
+        {% if image_desc_pairs %}
+            <ul>
+                {% for img, desc in image_desc_pairs %}
+                    <li>
+                        <img src="{{ url_for('static', filename=img) }}" alt="Image" width="400">
+                        <p>{{ desc }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No images available.</p>
+        {% endif %}
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+</html>
